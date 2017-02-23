@@ -1,0 +1,12 @@
+<h2>Places that you have visted</h2>
+
+{% for place in visited %}
+    <li>{{ place.name }}</li>
+
+{% empty %}
+
+    <p>You have not visited any places yet</p>
+
+{% endfor %}
+
+<a href="{% url 'place_list' %}">Your wishlist</a>
