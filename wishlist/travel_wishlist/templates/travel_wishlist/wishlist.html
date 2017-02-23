@@ -7,7 +7,7 @@
     <form method="POST" action="{% url 'place_list' %}">
         {% csrf_token %}
         {{ form }}
-        <button type="submit">Add</button>
+        <button id="add_new_place" type="submit">Add</button>
     </form>
 
     <h3>Places to visit</h3>
@@ -17,12 +17,12 @@
     {% for place in places %}
 
         <tr>
-            <td>{{ place.name }}</td>
+            <td id="place_name_{{ place.name }}">{{ place.name }}</td>
             <td>
                 <form method="POST" action="{%  url 'place_is_visited' %}">
                     {%  csrf_token %}
                     <input type="hidden" name="pk" value="{{ place.pk }}">
-                    <button type="submit">Visited!</button>
+                    <button type="submit" id="visited_{{ place.pk }}">Visited!</button>
                 </form>
              </td>
         </tr>
