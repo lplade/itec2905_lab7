@@ -1,0 +1,28 @@
+{% extends 'travel_wishlist/base.html' %}
+{% block content %}
+
+    <h2>Places details: {{ place.name }}</h2>
+
+    {% if place.visited %}
+        <p>Name: {{ place.name }}</p>
+        <p>Visited {{ place.date_visited }}</p>
+        <!--TODO format date string? -->
+        <p>Notes:</p>
+        {% if place.notes %}
+            <p>{{ place.notes }}</p>
+        {% else %}
+            <p><em>None</em></p>
+        {% endif %}
+    {% else %}
+        <form method="post" class="post-form" action="{% url 'place_detail' pk=place.pk %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">
+                Mark visited!
+            </button>
+        </form>
+    {% endif %}
+
+    <a href="{% url 'place_list' %}">Your wishlist</a>
+
+{% endblock %}

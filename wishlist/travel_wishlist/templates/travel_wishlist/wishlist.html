@@ -6,35 +6,35 @@
     <h3>Add a new place</h3>
     <form method="POST" action="{% url 'place_list' %}">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <button id="add_new_place" type="submit">Add</button>
     </form>
 
     <h3>Places to visit</h3>
 
-    <table>
+    <ul>
 
-    {% for place in places %}
+        {% for place in places %}
 
-        <tr>
-            <td id="place_name_{{ place.name }}">{{ place.name }}</td>
-            <td>
-                <form method="POST" action="{%  url 'place_is_visited' %}">
-                    {%  csrf_token %}
-                    <input type="hidden" name="pk" value="{{ place.pk }}">
-                    <button type="submit" id="visited_{{ place.pk }}">Visited!</button>
-                </form>
-             </td>
-        </tr>
+            {% if place.visited %}
+                <li class="visited"> <!-- TODO CSS for this -->
+                    <a href="{% url 'place_detail' pk=place.pk %}">{{ place.name }}</a> (Visited)
+                </li>
+            {% else %}
+                <li class="unvisited">
+                    <a href="{% url 'place_detail' pk=place.pk %}">{{ place.name }}</a>
+                </li>
+            {% endif %}
 
         {% empty %}
 
-        <tr>You have no places in your wishlist</tr>
+            <li>You have no places in your wishlist</li>
 
-    {% endfor %}
+        {% endfor %}
 
-    </table>
+    </ul>
 
-    <a href="{% url 'places_visited' %}">Places you've visited</a>
+
+    {# <a href="{% url 'places_visited' %}">Places you've visited</a> #}
 
 {% endblock %}
